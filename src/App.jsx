@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Physics, usePlane, useBox } from '@react-three/cannon'
+import { useControls } from './utils/useControls'
 
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
@@ -14,30 +15,38 @@ function Plane(props) {
 
 function Cube(props) {
   const [ref] = useBox(() => ({ mass: 1, ...props }))
+  const controls = useControls()
+  const x = useRef();
+
+
+  useFrame(() => {
+    const { forward, backward, left, right } = controls.current
+
+
+    
+
+  });
+  
   return (
-    <mesh castShadow ref={ref}>
-      <boxGeometry />
-      <meshStandardMaterial color="orange" />
+    <mesh ref={x}>
+      <mesh castShadow ref={ref} >
+        <boxGeometry />
+        <meshStandardMaterial color="orange" />
+    </mesh>
     </mesh>
   )
 }
 
+
 export default function App() {
-  const [ready, set] = useState(false)
-  useEffect(() => {
-    const timeout = setTimeout(() => set(true), 1000)
-    return () => clearTimeout(timeout)
-  }, [])
+
   return (
     <Canvas dpr={[1, 2]} shadows camera={{ position: [-5, 5, 5], fov: 50 }}>
       <ambientLight />
       <spotLight angle={0.25} penumbra={0.5} position={[10, 10, 5]} castShadow />
       <Physics>
         <Plane />
-        <Cube position={[0, 5, 0]} />
-        <Cube position={[0.45, 7, -0.25]} />
-        <Cube position={[-0.45, 9, 0.25]} />
-        {ready && <Cube position={[-0.45, 10, 0.25]} />}
+        <Cube position={[0, 0.5, 0]} />
       </Physics>
     </Canvas>
   )
