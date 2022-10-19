@@ -3,6 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Physics, usePlane, useBox } from '@react-three/cannon'
 import { useControls } from './utils/useControls'
 import { OrbitControls } from '@react-three/drei'
+//blender model imports
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import {Model} from './models/wolf_model.js'
 
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
@@ -49,8 +52,10 @@ export default function App() {
       <spotLight angle={0.25} penumbra={0.5} position={[10, 10, 5]} castShadow />
       <Physics>
         <Plane />
+        <Model/>
         <Cube position={[0, 4, 0]} />
       </Physics>
+      
     </Canvas>
   )
 }
