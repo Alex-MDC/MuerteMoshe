@@ -1,7 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Physics, usePlane, useBox } from '@react-three/cannon'
 import { useControls } from './utils/useControls'
+import { OrbitControls } from '@react-three/drei'
 
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
@@ -14,25 +15,27 @@ function Plane(props) {
 }
 
 function Cube(props) {
+  const [velocity, setVelocity] = useState(0.2)
   const [ref] = useBox(() => ({ mass: 1, ...props }))
   const controls = useControls()
-  const x = useRef();
+  const postions = useRef();
 
 
   useFrame(() => {
     const { forward, backward, left, right } = controls.current
-
-
-    
-
+    if(forward) postions.current.position.x+=.1;
+    if(backward) postions.current.position.x-=.1;
+    if(left) postions.current.position.z-=.1;
+    if(right) postions.current.position.z+=.1;
   });
   
   return (
-    <mesh ref={x}>
+    <mesh ref={postions}>
       <mesh castShadow ref={ref} >
         <boxGeometry />
         <meshStandardMaterial color="orange" />
-    </mesh>
+        <OrbitControls />
+      </mesh>
     </mesh>
   )
 }
@@ -46,7 +49,7 @@ export default function App() {
       <spotLight angle={0.25} penumbra={0.5} position={[10, 10, 5]} castShadow />
       <Physics>
         <Plane />
-        <Cube position={[0, 0.5, 0]} />
+        <Cube position={[0, 4, 0]} />
       </Physics>
     </Canvas>
   )
