@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useRef } from "react";
 import { useBox, useCylinder } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardC } from "@react-three/drei";
-import { Player } from "./Player";
+import { PlayerPosition} from "./Player";
 // Constants
 
 const speed = 300;
@@ -21,13 +21,13 @@ export const EnemyA = () => {
       friction: 1,
     },
   }))
-  //const [sub, get] = Player()
+/*   const [sub, get] = PlayerPosition()
 
-  /* useFrame((state, delta) => {
-    const {playerInfo} = get()
-    console.log(playerInfo);
-    x += rightward ? 0.2 : leftward ? -0.2 : 0;
-    z += forward   ? -0.2: backward ? +0.2 : 0;
+  useFrame((state, delta) => {
+    const {px,pz} = get()
+    console.log(px,pz);
+    x += px*.5
+    z += pz*.5
 
     enemyApi.position.set(x,0,z);
     

@@ -43,3 +43,9 @@ export const Player = () => {
   </group>
   </>
 }
+
+/* export const PlayerPosition = () => {
+  x +=1
+  z+=1
+  return {x,z};
+} */
