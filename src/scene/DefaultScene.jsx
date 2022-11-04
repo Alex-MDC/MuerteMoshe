@@ -7,6 +7,7 @@ import {KeyboardControls } from "@react-three/drei";
 import { Plane } from "../prefabs/Plane";
 import { Skybox } from "../prefabs/Skybox";
 import { Player } from "../prefabs/Player";
+import { EnemyA } from "../prefabs/enemyA";
 
 
 export const DefaultScene = () => {
@@ -34,6 +35,8 @@ export const DefaultScene = () => {
       ]}>
       <Player/>
     </KeyboardControls>
+   <EnemyA/>
+
     <spotLight position={[10, 10, 10]} />
     <ambientLight intensity={1} />
     <Plane />
